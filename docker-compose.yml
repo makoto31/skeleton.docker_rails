@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+
+  pg:
+    container_name: pg
+    build: ./postgres
+    ports: 
+      - 15432:5432
+
+  rails:
+    container_name: rails
+    build: ./rails
+    ports: 
+      - 3000:3000
+    depends_on:
+      - pg
+    links:
+      - pg:postgres
+    volumes:
+      - "./src:/www"
+    stdin_open: true
