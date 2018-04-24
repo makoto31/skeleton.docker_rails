@@ -1,0 +1,1 @@
+# skeleton.docker_rails
