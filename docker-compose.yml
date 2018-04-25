@@ -4,13 +4,17 @@ services:
 
   pg:
     container_name: pg
-    build: ./postgres
+    build: 
+      context: ./docker_file
+      dockerfile: Dockerfile_postgres
     ports: 
       - 15432:5432
 
   rails:
     container_name: rails
-    build: ./rails
+    build: 
+      context: ./docker_file
+      dockerfile: Dockerfile_rails
     ports: 
       - 3000:3000
     depends_on:
