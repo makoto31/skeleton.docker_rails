@@ -21,4 +21,5 @@ ENV TZ="${base_timezone}"
 # postgres ###################################
 ENV POSTGRES_USER="${dbuser}"
 ENV POSTGRES_PASSWORD="${dbpass}"
-ENV POSTGRES_DB="${dbname}"
+RUN echo "create database ${dbname}_development;" >> /docker-entrypoint-initdb.d/createdb.sql
+RUN echo "create database ${dbname}_test;" >> /docker-entrypoint-initdb.d/createdb.sql
