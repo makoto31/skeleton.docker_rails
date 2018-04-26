@@ -3,7 +3,7 @@ version: "3"
 services:
 
   pg:
-    container_name: pg
+    container_name: sample_pg
     build: 
       context: ./docker_file
       dockerfile: Dockerfile_postgres
@@ -11,7 +11,7 @@ services:
       - 15432:5432
 
   rails:
-    container_name: rails
+    container_name: sample_rails
     build: 
       context: ./docker_file
       dockerfile: Dockerfile_rails
