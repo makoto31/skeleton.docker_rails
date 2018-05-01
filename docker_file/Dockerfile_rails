@@ -1,9 +1,12 @@
+FROM node:8 AS node
 FROM ruby:2.4
 
 # 基本
 ARG base_timezone="Asia/Tokyo"
 ARG work_dir="/usr/local/share"
 ARG DEBIAN_FRONTEND=noninteractive
+# Node.js
+ARG yarn_version="1.5.1"
 # Rails
 ARG rails_version="5.1.4"
 
@@ -22,8 +25,11 @@ RUN localedef -f UTF-8 -i ja_JP ja_JP.utf8
 ENV TZ="${base_timezone}"
 
 # Rails ###################################
-# Railsにビルド時にNode.jsが必要 
-RUN apt-get install -y nodejs --no-install-recommends
+# Node.js multi-stage build
+COPY --from=node /opt/yarn-v${yarn_version} /opt/yarn/
+COPY --from=node /usr/local/bin/node /usr/local/bin/
+RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
+  && ln -s /opt/yarn/bin/yarn /usr/local/bin/yarnpkg
 
 # Postgresで接続
 RUN apt-get install -y postgresql-client --no-install-recommends
